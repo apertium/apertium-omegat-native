@@ -32,7 +32,7 @@ import org.omegat.util.Language;
 public class ApertiumNative extends BaseTranslate {
     public static final Preferences settings = Preferences.userNodeForPackage(ApertiumNative.class);
     public static final String BTYPE = "nightly";
-    private Map<String,String> modes = new HashMap<>();
+    private final Map<String,String> modes = new HashMap<>();
 
     public ApertiumNative() {
         JMenuItem item = new JMenuItem("Apertium Native (" + BTYPE + ")...");
@@ -56,9 +56,9 @@ public class ApertiumNative extends BaseTranslate {
 
     @Override
     protected String translate(Language sLang, Language tLang, String text) throws Exception {
-        String pair = sLang.getLocale().getDisplayLanguage() + " → " + tLang.getLocale().getDisplayLanguage();
+        String pair = sLang.getLocale().getISO3Language() + " → " + tLang.getLocale().getISO3Language();
         if (!modes.containsKey(pair)) {
-            return "No such mode.";
+            return "No such mode: " + pair;
         }
 
         File root = new File(settings.get("root", ""), BTYPE + "/apertium-all-dev/bin/");
@@ -220,7 +220,7 @@ public class ApertiumNative extends BaseTranslate {
             Locale a = Helpers.isoNormalize(tf[0]);
             Locale b = Helpers.isoNormalize(tf[1]);
 
-            entry = a.getDisplayLanguage() + " → " + b.getDisplayLanguage();
+            entry = a.getISO3Language() + " → " + b.getISO3Language();
 
             Helpers.log(Level.CONFIG, "Mode " + entry + ": {0}", mode);
             modes.put(entry, mode);
