@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="apertium-omegat-native" default="default" basedir=".">
+    <description>Builds, tests, and runs the project apertium-omegat-native.</description>
+    <import file="nbproject/build-impl.xml"/>
+
+    <target name="-post-jar">
+        <jar destfile="${dist.dir}/temp.jar" filesetmanifest="skip">
+            <zipgroupfileset dir="dist" includes="*.jar"/>
+            <manifest>
+                <attribute name="OmegaT-Plugin" value="true"/>
+                <section name="com.tinodidriksen.omegat.apertiumnative.ApertiumNative">
+                    <attribute name="OmegaT-Plugin" value="MachineTranslator"/>
+                </section>
+            </manifest>
+        </jar>
+        <delete file="${dist.jar}"/>
+        <zip destfile="${dist.jar}">
+            <zipfileset src="${dist.dir}/temp.jar"/>
+        </zip>
+        <delete file="${dist.dir}/temp.jar"/>
+        <delete file="${dist.dir}/README.TXT"/>
+    </target>
+</project>
