@@ -207,13 +207,13 @@ public class ApertiumNative extends BaseTranslate {
                 continue;
             }
 
-            mode = mode.replace("$1", "-g").replace("$2", "").trim();
+            mode = mode.replace("$1", "-n").replace("$2", "").trim();
             if (!mode.contains("'/usr/share")) {
                 mode = mode.replaceAll("(\\s*)(/usr/share/\\S+)(\\s*)", "\\1\"\\2\"\\3");
             }
             mode = mode.replace("/usr/share", root.toString() + "/usr/share");
             mode = mode.replace("/", File.separator).replace("'", "\"");
-            mode = "apertium-destxt | " + mode + " | apertium-retxt";
+            mode = "apertium-deshtml | " + mode + " | apertium-rehtml-noent";
 
             entry = entry.substring(0, entry.length() - ".mode".length());
             String[] tf = entry.split("-");
